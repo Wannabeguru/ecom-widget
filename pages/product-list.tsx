@@ -1,10 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Table, TableBody, TableCell, TableRow, Button } from "@mui/material";
 import productData from "../data/product-fixtures.json";
 import Link from "next/link";
-
+import { useRouter } from 'next/router';
 const ProductList = () => {
   const [products, setProducts] = useState(productData);
+  const router = useRouter();
+  const { updatedProduct } = router.query;
+
+  useEffect(() => {
+    if(updatedProduct && typeof updatedProduct === 'string') {
+      const product = JSON.parse(updatedProduct);
+      setProducts((prevProducts) => {
+        const productIndex = prevProducts.findIndex((p) => p.id === product.id);
+        if (productIndex > -1) {
+          const newProducts = [...prevProducts];
+          newProducts[productIndex] = product;
+          return newProducts;
+        } else {
+          return [...prevProducts, product]
+        }
+      })
+    }
+  }, [updatedProduct])
 
   const handleDelete = (id: string) => {
     setProducts(products.filter((product) => product.id !== id));
