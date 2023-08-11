@@ -4,11 +4,16 @@ import productData from "../data/product-fixtures.json";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ColorFilter from "../src/app/components/ColorFilter";
+
+
+
+
 const ProductList = () => {
   const [products, setProducts] = useState(productData);
   const router = useRouter();
   const { updatedProduct } = router.query;
   const [colorFilter, setColorFilter] = useState("");
+
 
   useEffect(() => {
     if (updatedProduct && typeof updatedProduct === "string") {
