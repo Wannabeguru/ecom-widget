@@ -4,6 +4,7 @@ import productData from "../data/product-fixtures.json";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ColorFilter from "../src/app/components/ColorFilter";
+import PaginationComponent from "@/app/components/Pagination";
 
 
 
@@ -13,7 +14,8 @@ const ProductList = () => {
   const router = useRouter();
   const { updatedProduct } = router.query;
   const [colorFilter, setColorFilter] = useState("");
-
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     if (updatedProduct && typeof updatedProduct === "string") {
@@ -32,6 +34,11 @@ const ProductList = () => {
       });
     }
   }, [updatedProduct]);
+  
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
 
   const handleDelete = (id: string) => {
     setProducts(products.filter((product) => product.id !== id));
@@ -44,6 +51,7 @@ const ProductList = () => {
         <TableBody>
           {products
             .filter(product => colorFilter === "" || product.color === colorFilter)
+            .slice((page - 1) * itemsPerPage, page * itemsPerPage)
             .map((product) => (
               <TableRow key={product.id}>
                 <TableCell>{product.name}</TableCell>
@@ -60,6 +68,7 @@ const ProductList = () => {
           ))}
         </TableBody>
       </Table>
+      <PaginationComponent count={products.length} page={page} itemsPerPage={itemsPerPage} onChange={handleChange}/>
     </>
   );
 };
