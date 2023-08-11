@@ -10,6 +10,7 @@ const ProductList = () => {
     setProducts(products.filter((product) => product.id !== id));
   };
 
+
   return (
     <Table>
       <TableBody>
@@ -20,7 +21,7 @@ const ProductList = () => {
             <TableCell>{product.type}</TableCell>
             <TableCell>{product.price}</TableCell>
             <TableCell>
-              <Link href={`/product-detail/${product.sku}`}>
+              <Link href={`/product-detail/${product.sku}` }>
                 <Button>Edit</Button>
               </Link>
               <Button onClick={() => handleDelete(product.id)}>Delete</Button>
