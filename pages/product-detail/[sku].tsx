@@ -31,7 +31,7 @@ const ProductDetail = () => {
             return;
         }
 
-        const updatedProduct = {id: sku, name, type, description, color, price};
+        const updatedProduct = {sku, name, type, description, color, price};
 
 
         router.push({

@@ -11,8 +11,9 @@ const ProductList = () => {
   useEffect(() => {
     if(updatedProduct && typeof updatedProduct === 'string') {
       const product = JSON.parse(updatedProduct);
+      console.log('updated product SKU:', product.sku)
       setProducts((prevProducts) => {
-        const productIndex = prevProducts.findIndex((p) => p.id === product.id);
+        const productIndex = prevProducts.findIndex((p) => p.sku === product.sku);
         if (productIndex > -1) {
           const newProducts = [...prevProducts];
           newProducts[productIndex] = product;
